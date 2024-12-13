@@ -1,4 +1,5 @@
 #include "videocapture.h"
+//test1
 //random librery,used for the noices,it will be used later
 #include <random>
 //class contructor,this step is important since it initialtes all the variables of the class
