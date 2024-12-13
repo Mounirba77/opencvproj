@@ -111,18 +111,33 @@ void VideoCapture::updateFrame() {
         if (m_detectFace) addDetectFace(frame);
 
         frameImage = cvMatToQImage(frame);
+        //captures the time of the last frame
+        static auto lastTime1 = std::chrono::high_resolution_clock::now();
+        //captures the time of the current frame
+        auto currentTime1 = std::chrono::high_resolution_clock::now();
+        //calculates the time difference between the last and current frames
+        double elapsed1 = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime1 - lastTime1).count();
+        //tests if the difference is positive then calculates the framerate
+        //then changes the variable of the real fps and sends a signal the realframerate changed to display the new realframerate
+        if (elapsed1 > 0) {
+            m_realFrameRate = 1000.0 / elapsed1;
+            emit realFrameRateChanged();
+        }
+        //changing the lasttime with current time to prepare to the next calculation when the new frame comes
+        lastTime1 = currentTime1;
         if (isRecording && videoWriter.isOpened()) {
             videoWriter.write(frame);
         }
         //this lign will trigger the update again,else it will only capture the frame once
         update();
 
-        // // Record video with synchronized FPS
-        // // This part will make sure that video recorder will save frames when the frames updates to not miss any frame
-        // if (isRecording && videoWriter.isOpened()) {
-        //     videoWriter.write(frame);
-        // }
+        // Record video with synchronized FPS
+        // This part will make sure that video recorder will save frames when the frames updates to not miss any frame
+        if (isRecording && videoWriter.isOpened()) {
+            videoWriter.write(frame);
+        }
     }
+
 }
 
 //this function starts the video recording
