@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 //videocapture class inclusion
 //main.cpp has the role of connecting qml front to c++ back
-
+//rania
 #include "videocapture.h"
 
 int main(int argc, char *argv[])
