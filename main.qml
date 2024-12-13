@@ -1,4 +1,5 @@
 //used qt libraries for the GUI design
+//mariemomri
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
